@@ -1,0 +1,217 @@
+.asset-table {
+    margin: 20px;
+    font-size: 10px;
+    font-family: Verdana, sans-serif; /* Ensure Verdana font */
+}
+
+.filters {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    position: relative;
+    left: 523px;
+    font-family: Verdana, sans-serif; /* Set font to Verdana */
+}
+.filters label {
+    font-weight: 300;
+    font-size: 12px;
+    color: #444;
+}
+.filters select,
+.filters input {
+     padding: 8px 10px;
+    font-size: 12px;
+    font-family: Verdana, sans-serif; /* Ensure Verdana font */
+    border: 1px solid #ccc;
+    transition: all 0.3s ease; /* Smooth hover effect */
+    background-color: #f9f9f9; /* Light background for modern look */
+}
+.filters input {
+    width: 200px;
+}
+.filters select {
+    width: 150px;
+}
+.filters select:hover,
+.filters input:hover {
+    border-color: #888; /* Darker border on hover */
+    background-color: #fff; /* Change background to pure white */
+}
+.filters select:focus,
+.filters input:focus {
+    outline: none; /* Remove default outline */
+    border-color: #0078d7; /* Highlight border color */
+    box-shadow: 0 0 5px rgba(0, 120, 215, 0.5); /* Subtle blue glow */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f0f0f0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+tr {
+    line-height: 1;
+}
+th {
+    cursor: pointer;
+    background-color: #f4f4f4;
+    position: relative; /* Ensures the child element can be positioned within */
+    text-align: left; /* Keeps the text aligned to the left */
+    padding-right: 30px;
+}
+
+.filter-icon {
+   font-weight: 1000;
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: rgb(16, 1, 1);
+    transform: translateY(-50%);
+    vertical-align: middle;
+    top: 50%;
+}
+
+th:hover .filter-icon {
+    color: black;
+}
+
+.filter-icon::before {
+    content: '▼'; /* Unicode arrow symbol for a wider look */
+    font-size: 8px; /* Bigger arrow size */
+    color: darkgray;
+    transition: transform 0.2s, color 0.2s; /* Smooth animations */
+}
+th:hover .filter-icon::before {
+    color: black; /* Highlight the icon on hover */
+    transform: scale(1.2); /* Slight zoom effect for emphasis */
+}
+
+.filter-icon.active::before {
+    color: blue; /* Active state to indicate sorting */
+    transform: scale(1.3) rotate(180deg); /* Rotate to show sorting order */
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; /* Light grey for odd rows */
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #ffffff; /* White for even rows */
+}
+
+/* Add hover effect for table rows */
+table tbody tr:hover {
+    background-color: #e6f7ff; /* Light blue on hover */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+table thead th {
+    background-color: #d3d3d3; /* Light grey background for header */
+    font-weight: bold;        /* Bold text for header */
+   color: #051537;             /* Dark grey text color */
+    text-align: left;         /* Align text to the left */
+}
+
+/* Optional: Add hover effect to header for interactivity */
+table thead th:hover {
+    background-color: #c0c0c0; /* Slightly darker grey on hover */
+    cursor: pointer;          /* Pointer cursor for better feedback */
+}
+
+.table-header-filter {
+     position: absolute;
+    right: 10px; /* Adjust this value for padding from the right edge */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center vertically */
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.table-header-filter .up-arrow,
+.table-header-filter .down-arrow {
+    font-size: 8px; /* Arrow size */
+    line-height: 1; /* Tighter spacing between arrows */
+    transition: color 0.3s ease-in-out;
+    user-select: none; /* Prevent text selection when clicking */
+}
+
+.table-header-filter:hover {
+     color: rgb(16, 15, 15); /* Highlight color on hover */
+}
+
+.table-header-filter .up-arrow:hover,
+.table-header-filter .down-arrow:hover {
+    color: rgb(16, 15, 15); /* Highlight color on hover */
+}
+
+.table-header-filter.active-asc .up-arrow {
+    color: blue; /* Active state color for ascending */
+}
+
+.table-header-filter.active-desc .down-arrow {
+    color: red; /* Active state color for descending */
+}
+
+/* Styling for table rows (alternating colors) */
+.asset-row:nth-child(odd) {
+    background-color: #f9f9f9; /* Light grey */
+}
+
+.asset-row:nth-child(even) {
+    background-color: #ffffff; /* White */
+}
+
+/* Header row styling */
+.asset-table thead tr {
+    background-color: #eeeeee; /* Light bold grey */
+    font-weight: bold;
+}
+
+.row-count {
+    margin-left: 20px;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    color: #555;
+    position: relative;
+    top: 29px;
+}
+
+.clear-filters-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #f5f5f5; /* Light grey */
+    border: 1px solid #ccc; /* Border for a subtle look */
+    border-radius: 0px;
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    height: 30px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.clear-filters-btn:hover {
+    background-color: #e0e0e0; /* Slightly darker grey */
+    color: #333; /* Dark text on hover */
+}
+

@@ -1,0 +1,76 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.all @ categories='assetslist.clientLib'}" />
+</sly>
+ <span id="rowCount" class="row-count"></span>
+<div class="filters">
+    <!-- Dropdown to select the filter criteria -->
+    <label for="filterCriteria">Filter by:</label>
+    <select id="filterCriteria" onchange="filterAssets()">
+        <option value="name">Name</option>
+        <option value="modifiedBy">Modified By</option>
+        <option value="status">Status</option>
+    </select>
+
+    <!-- Filter input field -->
+    <label for="filterValue">Filter Value:</label>
+    <input type="text" id="filterValue" onkeyup="filterAssets()" onfocus="updateRowCount()" placeholder="Enter filter value"> 
+    <button id="clearFiltersBtn" class="clear-filters-btn" onclick="clearFilters()">Reset</button>
+</div>
+<div class="asset-table">
+    <table id="assetTable">
+        <thead>
+            <tr>
+                <th>Content Record
+               <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+                <th>Path
+                <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+                <th>Last Modified
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(2, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(2, this)">▼</span>
+                </span>
+                </th>
+                <th>Modified By
+                   <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortColumn('contentRecord', 'asc')">▲</span>
+                    <span class="down-arrow" onclick="sortColumn('contentRecord', 'desc')">▼</span>
+                </span>
+                </th>
+                <th>Locked By
+                   <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortColumn('contentRecord', 'asc')">▲</span>
+                    <span class="down-arrow" onclick="sortColumn('contentRecord', 'desc')">▼</span>
+                </span>
+                </th>
+                <th>Status
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortColumn('contentRecord', 'asc')">▲</span>
+                    <span class="down-arrow" onclick="sortColumn('contentRecord', 'desc')">▼</span>
+                </span>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="assetTableBody">
+            <sly data-sly-use.model="com.adobe.aem.guides.wknd.core.models.DamAssetsModel">
+                <sly data-sly-list.asset="${model.assetList}">
+                    <tr class="asset-row">
+                         <td class="asset-name">${asset.name}</td>
+                        <td class="asset-path">${asset.path}</td>
+                        <td class="asset-last-modified">${asset.lastModified}</td>
+                        <td class="asset-modified-by">${asset.modifiedBy}</td>
+                        <td class="asset-locked-by">${asset.lockedBy}</td>
+                        <td class="asset-status">${asset.status}</td>
+                    </tr>
+                </sly>
+            </sly>
+        </tbody>
+    </table>
+</div>
