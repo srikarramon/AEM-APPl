@@ -8,11 +8,20 @@ function filterAssets() {
     
     // Get all the rows in the asset table body
     const rows = document.querySelectorAll("#assetTableBody tr");
+    //const rows = document.querySelectorAll("#assetTableBody .asset-row");  
+    const now = new Date(); // Current date
 
     // Loop through each row to check if it matches the filter
     rows.forEach(row => {
+        const assetName = row.querySelector(".asset-name").textContent.toLowerCase();
         const cells = row.getElementsByTagName("td");
         let match = false;
+        const pathCell = row.querySelector(".asset-path");
+        //const path = pathCell ? pathCell.textContent.trim() : "";
+        let isVisible = false;
+        const lastModifiedCell = row.querySelector(".asset-last-modified");
+        const path = pathCell ? pathCell.textContent.trim() : "";
+        const lastModified = lastModifiedCell ? lastModifiedCell.textContent.trim() : "";
 
         // Check the selected filter criteria and match it with the value entered
         switch (filterCriteria) {
@@ -25,6 +34,32 @@ function filterAssets() {
             case "status":
                 match = cells[5].textContent.toLowerCase().includes(filterValue); // Status column
                 break;
+            case "images":
+                // Check for image file extensions
+                match = /\.(jpeg|jpg|png|svg)$/i.test(assetName);
+                break;
+
+            case "pdfs":
+                // Check for PDF files
+                match = /\.pdf$/i.test(assetName);
+                break;
+
+            case "jsonFiles":
+                // Check for JSON files
+                match = /\.json$/i.test(assetName);
+                break;
+            case "contentFragments":
+               // match = !/\.\w+$/i.test(path); // No extension, likely a content fragment
+               if (!/\.\w+$/i.test(path)) { // No file extension
+                    const modifiedDate = parseISODate(lastModified);
+                    if (modifiedDate) {
+                        const timeDiff = now - modifiedDate;
+                        const daysDiff = timeDiff / (1000 * 60 * 60 * 24); // Convert ms to days
+                        match = daysDiff <= 30; // Modified within the last 30 days
+                    }
+                }
+                break;
+
             default:
                 match = false;
         }
@@ -82,4 +117,14 @@ function clearFilters() {
 
     // Trigger the filterAssets function to reset the table
     filterAssets();
+}
+
+// Utility function to parse ISO date strings
+function parseISODate(isoDateStr) {
+    try {
+        return new Date(isoDateStr);
+    } catch (error) {
+        console.error("Error parsing date:", isoDateStr);
+        return null;
+    }
 }

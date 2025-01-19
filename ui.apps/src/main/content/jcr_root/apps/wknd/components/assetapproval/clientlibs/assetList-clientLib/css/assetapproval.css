@@ -10,7 +10,7 @@
     gap: 5px;
     position: relative;
     align-items: center;
-    width: 98%;
+    width: 100%;
     justify-content: flex-end;
     font-family: Verdana, sans-serif; /* Set font to Verdana */
 }
@@ -216,3 +216,95 @@ table thead th:hover {
     color: #333; /* Dark text on hover */
 }
 
+.disabled-button {
+    background-color: #ddd;
+    color: #999;
+    cursor: not-allowed;
+}
+.asset-ready-conflict button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+
+.asset-conflict-es .status-icon, .asset-conflict-en .status-icon{
+     width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+
+}
+
+.asset-approve-reject-en button, .asset-approve-reject-es button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.asset-approve-reject-en .status-icon {
+     width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.asset-approve-reject-es .status-icon {
+     width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.asset-approve-reject-es button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.asset-approve-reject-en button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.asset-ready-conflict .status-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.asset-ready-conflict .ready-btn img {
+    filter: hue-rotate(120deg); /* Optional styling for the "ready" icon */
+}
+
+.asset-ready-conflict .conflict-btn img {
+    filter: hue-rotate(0deg); /* Optional styling for the "conflict" icon */
+}
+
+.asset-ready-conflict button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.legend-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    justify-content: flex-end;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+}
+
+.legend-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+}

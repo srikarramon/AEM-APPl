@@ -1,0 +1,158 @@
+
+
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+  <sly data-sly-call="${clientlib.all @ categories='assetslist.clientLib'}" />
+</sly>
+
+<div class="asset-table">
+    <div class="legend-container">
+    <span class="legend-item">
+        <img src="/content/dam/wknd/en/site/icons/certified-icon.png" alt="Certified" class="legend-icon" />
+        Certified
+    </span>
+    <span class="legend-item">
+        <img src="/content/dam/wknd/en/site/icons/stamp.png" alt="Was Certified" class="legend-icon" />
+        Was Certified
+    </span>
+    <span class="legend-item">
+        <img src="/content/dam/wknd/en/site/icons/edit.png" alt="Modified" class="legend-icon" />
+        Modified
+    </span>
+    <span class="legend-item">
+        <img src="/content/dam/wknd/en/site/icons/check.png" alt="Ready" class="legend-icon" />
+        Ready
+    </span>
+    <span class="legend-item">
+        <img src="/content/dam/wknd/en/site/icons/change.png" alt="Was Ready" class="legend-icon" />
+        Was Ready
+    </span>
+    <span class="legend-item">
+        <img src="/content/dam/wknd/en/site/icons/conflict.png" alt="Conflicted" class="legend-icon" />
+        Conflicted
+    </span>
+    <span class="legend-item">
+        <img src="/content/dam/wknd/en/site/icons/chat.png" alt="Comments" class="legend-icon" />
+        Comments
+    </span>
+</div>
+<div class="filters">
+    <!-- Dropdown to select the filter criteria -->
+    <label for="filterCriteria">Filter by:</label>
+    <select id="filterCriteria" onchange="filterAssets()">
+        <option value="name">Name</option>
+        <option value="modifiedBy">Modified By</option>
+        <option value="status">Status</option>
+        <option value="images">Images</option>
+        <option value="contentFragments">Content Fragments</option>
+        <option value="pdfs">PDFs</option>
+        <option value="jsonFiles">JSON Files</option>
+    </select>
+
+    <!-- Filter input field -->
+    <label for="filterValue">Filter Value:</label>
+    <input type="text" id="filterValue" onkeyup="filterAssets()" onfocus="updateRowCount()" placeholder="Enter filter value"> 
+    <button id="clearFiltersBtn" class="clear-filters-btn" onclick="clearFilters()">Reset</button>
+</div>
+    <table id="assetTable">
+        <thead>
+            <tr>
+               <!-- <th>Content Record</th> -->
+                <th>Content Record
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+                <th>EN Cert
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+                <th>ES Cert
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+                <th>EN Ready
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+                <th>ES Ready
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+                <th>EN Conflict
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                <th>ES Conflict
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                <th>Comments
+                    <span class="table-header-filter">
+                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                </span>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="assetTableBody">
+            <sly data-sly-use.model="com.adobe.aem.guides.wknd.core.models.DamAssetsModel">
+                <sly data-sly-list.asset="${model.assetList}">
+                    <tr class="asset-row" data-path="${asset.path}" data-status="${asset.status}" data-lastModified="${asset.lastModified}" data-assetName="${asset.name}" data-lastapproved="${asset.lastApprovedDate}"
+                    data-esApproved="${asset.esStatus}" data-enApproved="${asset.enStatus}" data-isready="${asset.readyStatus ? 'true' : 'false'}" data-en-ready="${asset.enReady ? 'true' : 'false'}" data-es-ready="${asset.esReady ? 'true' : 'false'}">
+                       <!-- <td class="asset-name">${asset.name}</td> -->
+                        <td class="asset-path">${asset.path}</td>
+                        <!--<td class="asset-last-modified">${asset.lastModified}</td> -->
+                        <td class="asset-approve-reject-en">
+                            <!-- <button class="approve-btn" onclick="updateStatus(this, 'en-certified')">✔</button> -->
+                             <button class="approve-btn" onclick="updateStatus(this, 'en-certified')">
+                                <img src="/content/dam/wknd/en/site/icons/certified-icon.png" alt="Ready" class="status-icon" />
+                            </button>
+                           <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
+                        </td>
+                       <!-- <td class="asset-modified-by">${asset.modifiedBy}</td> -->
+                       <td class="asset-approve-reject-es">
+                             <button class="approve-btn" onclick="updateStatus(this, 'es-certified')">
+                                <img src="/content/dam/wknd/en/site/icons/certified-icon.png" alt="Ready" class="status-icon" />
+                            </button>
+                           <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
+                        </td>
+                        <td class="asset-ready-en">
+                            <button class="ready-btn-en" onclick="markReady(this,'enReady')">✔</button>
+                            <span style="display:none">Ready</span>
+                            <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
+                        </td>
+                         <td class="asset-ready-es">
+                            <button class="ready-btn-es" onclick="markReady(this,'esReady')">✔</button>
+                             <span style="display:none">Ready</span>
+                            <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
+                        </td>
+                       <td class="asset-conflict-es">
+                           
+                            <button class="conflict-btn" onclick="markConflict(this)">
+                                <img src="/content/dam/wknd/en/site/icons/conflict.png" alt="Conflict" class="status-icon" />
+                            </button>
+                        </td>
+                        <td class="asset-conflict-en">
+                           
+                            <button class="conflict-btn" onclick="markConflict(this)">
+                                <img src="/content/dam/wknd/en/site/icons/conflict.png" alt="Conflict" class="status-icon" />
+                            </button>
+                        </td>
+                        <td class="asset-status">${asset.status}</td>
+                    </tr>
+                </sly>
+            </sly>
+        </tbody>
+    </table>
+</div>
