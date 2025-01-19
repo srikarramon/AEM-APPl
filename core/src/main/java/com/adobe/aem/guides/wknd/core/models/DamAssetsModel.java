@@ -96,13 +96,14 @@ public class DamAssetsModel {
 
             if (metadataNode != null) {
                 // Set the lastModified value, checking metadataNode first, then contentNode, and defaulting to "N/A"
-                assetData.setLastModified(
-                        metadataNode != null && metadataNode.hasProperty("jcr:lastModified")
-                                ? metadataNode.getProperty("jcr:lastModified").getString()
-                                : (contentNode != null && contentNode.hasProperty("jcr:lastModified")
-                                ? contentNode.getProperty("jcr:lastModified").getString()
-                                : "N/A")
-                );
+                    // Set the lastModified value, checking contentNode first, then metadataNode, and defaulting to "N/A"
+                    assetData.setLastModified(
+                            contentNode != null && contentNode.hasProperty("jcr:lastModified")
+                                    ? contentNode.getProperty("jcr:lastModified").getString()
+                                    : (metadataNode != null && metadataNode.hasProperty("jcr:lastModified")
+                                    ? metadataNode.getProperty("jcr:lastModified").getString()
+                                    : "N/A")
+                    );
                 assetData.setModifiedBy(
                         metadataNode != null && metadataNode.hasProperty("jcr:lastModifiedBy")
                                 ? metadataNode.getProperty("jcr:lastModifiedBy").getString()
@@ -117,6 +118,70 @@ public class DamAssetsModel {
                                 ? contentNode.getProperty("cq:lockOwner").getString()
                                 : "N/A")
                 );
+                assetData.setStatus(
+                        metadataNode != null && metadataNode.hasProperty("status")
+                                ? metadataNode.getProperty("status").getString()
+                                : "unknown" // Default value
+                );
+                assetData.setLastApprovedDate(
+                        metadataNode != null && metadataNode.hasProperty("lastApprovedDate")
+                                ? metadataNode.getProperty("lastApprovedDate").getString()
+                                : "N/A"
+                );
+                assetData.setLastENapprovedDate(
+                        metadataNode.hasProperty("lastENapprovedDate")
+                                ? metadataNode.getProperty("lastENapprovedDate").getString()
+                                : "N/A"
+                );
+                assetData.setEnStatus(
+                        metadataNode.hasProperty("en-status")
+                                ? metadataNode.getProperty("en-status").getString()
+                                : "unknown"
+                );
+                assetData.setLastESapprovedDate(
+                        metadataNode.hasProperty("lastESapprovedDate")
+                                ? metadataNode.getProperty("lastESapprovedDate").getString()
+                                : "N/A"
+                );
+                assetData.setEsStatus(
+                        metadataNode.hasProperty("es-status")
+                                ? metadataNode.getProperty("es-status").getString()
+                                : "unknown"
+                );
+                assetData.setEnReady(
+                        metadataNode.hasProperty("enReady")
+                                ? metadataNode.getProperty("enReady").getBoolean()
+                                : false
+                );
+
+                // Set esReady property
+                assetData.setEsReady(
+                        metadataNode.hasProperty("esReady")
+                                ? metadataNode.getProperty("esReady").getBoolean()
+                                : false
+                );
+
+                // Set enReadyTimestamp property
+                assetData.setEnReadyTimestamp(
+                        metadataNode.hasProperty("enReadyTimestamp")
+                                ? metadataNode.getProperty("enReadyTimestamp").getDate()
+                                : null
+                );
+
+                // Set esReadyTimestamp property
+                assetData.setEsReadyTimestamp(
+                        metadataNode.hasProperty("esReadyTimestamp")
+                                ? metadataNode.getProperty("esReadyTimestamp").getDate()
+                                : null
+                );
+                if (metadataNode != null && metadataNode.hasProperty("readyStatus")) {
+                    assetData.setReadyStatus(metadataNode.getProperty("readyStatus").getBoolean());
+                    log.info("Asset readyStatus set to: {}", metadataNode.getProperty("readyStatus").getBoolean());
+                } else {
+                    assetData.setReadyStatus(false); // Default or fallback value
+                    log.info("Asset readyStatus set to default: false");
+                }
+                log.debug("ReadyStatus for asset {}: {}", asset.getPath(), assetData.getReadyStatus());
             } else {
                 log.debug("Metadata node not found for asset: {}", asset.getPath());
             }
