@@ -85,7 +85,7 @@ function filterAssets() {
 
     // Loop through each row to check if it matches the filter
     rows.forEach(row => {
-        const assetName = row.querySelector(".asset-name").textContent.toLowerCase();
+       // const assetName = row.querySelector(".asset-name").textContent.toLowerCase();
         const cells = row.getElementsByTagName("td");
         let match = false;
         const pathCell = row.querySelector(".asset-path");
@@ -95,8 +95,39 @@ function filterAssets() {
         const path = pathCell ? pathCell.textContent.trim() : "";
         const lastModified = lastModifiedCell ? lastModifiedCell.textContent.trim() : "";
 
+
         // Check the selected filter criteria and match it with the value entered
         switch (filterCriteria) {
+             case "encertified":
+                // Check if the EN Certified button is disabled
+                const enCertifiedButton = row.querySelector(".asset-approve-reject-en .approve-btn");
+                match = enCertifiedButton && enCertifiedButton.classList.contains("disabled-button") && enCertifiedButton.hasAttribute("disabled");
+                break;
+
+            case "escertified":
+                // Check if the ES Certified button is disabled
+                const esCertifiedButton = row.querySelector(".asset-approve-reject-es .approve-btn");
+                match = esCertifiedButton && esCertifiedButton.classList.contains("disabled-button") && esCertifiedButton.hasAttribute("disabled");
+                break;
+
+            case "enready":
+                // Check if EN Ready button is hidden and span is visible
+                const enReadyButton = row.querySelector(".asset-ready-en .ready-btn-en");
+                const enReadySpan = row.querySelector(".asset-ready-en span");
+                match = enReadyButton && enReadySpan &&
+                        enReadyButton.style.display === "none" &&
+                        enReadySpan.style.display === "inline";
+                break;
+
+            case "esready":
+                // Check if ES Ready button is hidden and span is visible
+                const esReadyButton = row.querySelector(".asset-ready-es .ready-btn-es");
+                const esReadySpan = row.querySelector(".asset-ready-es span");
+                match = esReadyButton && esReadySpan &&
+                        esReadyButton.style.display === "none" &&
+                        esReadySpan.style.display === "inline";
+                break;
+
             case "name":
                 match = cells[0].textContent.toLowerCase().includes(filterValue); // Name column
                 break;
@@ -204,21 +235,17 @@ function parseISODate(isoDateStr) {
 function updateStatus(button, status) {
     // Get the parent row of the button
     const row = button.closest("tr");
-
     // Ensure the row exists
     if (!row) {
         console.error("Row not found for the button clicked.");
         return;
     }
-
     // Retrieve the data-path attribute from the row
     const path = row.getAttribute("data-path");
-
     if (!path) {
         console.error("Path is empty or undefined.");
         return;
     }
-
     // Log the path for debugging
     console.log("Path:", path);
 
@@ -361,4 +388,77 @@ function markReady(button, status) {
             console.error("Error updating ready status:", error);
             alert("Failed to mark the asset as ready. Please try again.");
         });
+}
+
+
+function selectNonCertifiedENESRows(checkbox, certifyType) {
+    // Get whether the checkbox is checked
+    const isChecked = checkbox.checked;
+
+    // Find all rows in the table
+    const rows = document.querySelectorAll('.asset-row');
+
+    rows.forEach(row => {
+        let certifyButton;
+        let contentRecordCheckbox;
+
+        // Based on certifyType, select the correct column
+        if (certifyType === 'encertify') {
+            certifyButton = row.querySelector('.asset-approve-reject-en .approve-btn');
+            contentRecordCheckbox = row.querySelector('.asset-checkbox-input');
+        } else if (certifyType === 'escertify') {
+            certifyButton = row.querySelector('.asset-approve-reject-es .approve-btn');
+            contentRecordCheckbox = row.querySelector('.asset-checkbox-input');
+        }
+
+        if (certifyButton && !certifyButton.disabled) {
+            // For EN Certify or ES Certify, if the button is not disabled, show the row and check the checkbox
+            row.style.display = isChecked ? '' : '';
+            if (contentRecordCheckbox) {
+                contentRecordCheckbox.checked = isChecked;
+            }
+        } else {
+            // Hide the row if the button is disabled and uncheck the checkbox
+            row.style.display = isChecked ? 'none' : '';
+            if (contentRecordCheckbox) {
+                contentRecordCheckbox.checked = false;
+            }
+        }
+    });
+}
+
+function selectReadyRows(checkbox, readyType) {
+    // Get whether the checkbox is checked
+    const isChecked = checkbox.checked;
+
+    // Find all rows in the table
+    const rows = document.querySelectorAll('.asset-row');
+
+    rows.forEach(row => {
+        let readyButton;
+        let contentRecordCheckbox;
+
+        // Based on readyType, select the correct column
+        if (readyType === 'enready') {
+            readyButton = row.querySelector('.asset-ready-en .ready-btn-en');
+            contentRecordCheckbox = row.querySelector('.asset-checkbox-input');
+        } else if (readyType === 'esready') {
+            readyButton = row.querySelector('.asset-ready-es .ready-btn-es');
+            contentRecordCheckbox = row.querySelector('.asset-checkbox-input');
+        }
+
+        if (readyButton && !readyButton.disabled && window.getComputedStyle(readyButton).display !== 'none') {
+            // For EN Ready or ES Ready, if the button is not disabled, show the row and check the checkbox
+            row.style.display = isChecked ? '' : '';
+            if (contentRecordCheckbox) {
+                contentRecordCheckbox.checked = isChecked;
+            }
+        } else {
+            // Hide the row if the button is disabled and uncheck the checkbox
+            row.style.display = isChecked ? 'none' : '';
+            if (contentRecordCheckbox) {
+                contentRecordCheckbox.checked = false;
+            }
+        }
+    });
 }

@@ -56,7 +56,7 @@ thead {
 }
 
 th, td {
-    padding: 10px;
+    padding: 7px;
     text-align: left;
     border: 1px solid #ddd;
 }
@@ -66,14 +66,14 @@ tr:hover {
 }
 
 tr {
-    line-height: 1;
+    line-height: 1.5;
 }
 th {
     cursor: pointer;
     background-color: #f4f4f4;
     position: relative; /* Ensures the child element can be positioned within */
     text-align: left; /* Keeps the text aligned to the left */
-    padding-right: 30px;
+    padding-right: 20px;
 }
 
 .filter-icon {
@@ -307,4 +307,78 @@ table thead th:hover {
     width: 18px;
     height: 18px;
     display: inline-block;
+}
+
+.header-with-actions {
+    text-align: left; /* Align content to the left */
+}
+.header-content {
+    display: flex; /* Use flexbox to align items */
+    align-items: center; /* Align items vertically */
+    gap: 5px; /* Space between elements */
+}
+
+/* Align checkbox, text, and button within the header */
+th label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px; /* Space between checkbox and text */
+    font-weight: bold; /* Ensure header text stands out */
+}
+
+.bulk-select-checkbox {
+    margin: 0;
+}
+
+.bulk-action-btn {
+   padding: 3px 6px;
+    font-size: 9px;
+    cursor: pointer;
+}
+
+.bulk-select-btn {
+    background-color: #0073e6;
+    color: white;
+    border: none;
+   
+    padding: 2px 6px;
+    font-size: 7px;
+    cursor: pointer;
+    position: relative;
+   
+}
+
+.bulk-select-btn:hover {
+    background-color: #005bb5;
+}
+
+/* Ensure alignment across table headers */
+th {
+    white-space: nowrap; /* Prevent header text from wrapping */
+    vertical-align: middle;
+}
+
+.asset-checkbox {
+    width: 30px; /* Adjust width to fit the checkbox */
+    text-align: center; /* Center-align the checkbox */
+}
+
+/* Style for the wrapper to align items horizontally */
+.asset-path-wrapper {
+    display: flex; /* Enables Flexbox */
+    align-items: center; /* Aligns items vertically */
+    gap: 10px; /* Adds space between the checkbox and text */
+}
+
+/* Style for the checkbox */
+.asset-checkbox-input {
+    margin: 0; /* Removes default margin */
+    cursor: pointer; /* Adds a pointer cursor for interactivity */
+}
+
+/* Optional: Text style for the path */
+.asset-path-text {
+    overflow: hidden;
+    text-overflow: ellipsis; /* Truncates text with ellipsis if it overflows */
+   
 }

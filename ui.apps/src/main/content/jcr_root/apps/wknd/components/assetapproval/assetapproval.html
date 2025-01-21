@@ -46,6 +46,10 @@
         <option value="contentFragments">Content Fragments</option>
         <option value="pdfs">PDFs</option>
         <option value="jsonFiles">JSON Files</option>
+         <option value="encertified">EN Certified</option>
+        <option value="escertified">ES Certified</option>
+        <option value="enready">EN Ready</option>
+        <option value="esready">ES Ready</option>
     </select>
 
     <!-- Filter input field -->
@@ -57,35 +61,56 @@
         <thead>
             <tr>
                <!-- <th>Content Record</th> -->
-                <th>Content Record
+                <th>
+                    Content Record
                     <span class="table-header-filter">
                     <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
                     <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
                 </span>
                 </th>
-                <th>EN Cert
-                    <span class="table-header-filter">
-                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
-                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
-                </span>
+                <th class="header-with-actions">
+                    <div class="header-content">
+                        <input type="checkbox" class="bulk-select-checkbox" id="bulkSelectEsCert" onchange="selectNonCertifiedENESRows(this,'encertify')"/>
+                        <label for="bulkSelectEsCert">EN Cert</label>
+                        <button class="bulk-action-btn">Apply</button>
+                        <span class="table-header-filter">
+                            <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                            <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                        </span>
+                    </div>
                 </th>
-                <th>ES Cert
-                    <span class="table-header-filter">
-                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
-                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
-                </span>
+                 <th class="header-with-actions">
+                    <div class="header-content">
+                        <input type="checkbox" class="bulk-select-checkbox" id="bulkSelectEsCert" onchange="selectNonCertifiedENESRows(this,'escertify')"/>
+                        <label for="bulkSelectEsCert">ES Cert</label>
+                        <button class="bulk-action-btn">Apply</button>
+                        <span class="table-header-filter">
+                            <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                            <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                        </span>
+                    </div>
                 </th>
-                <th>EN Ready
-                    <span class="table-header-filter">
-                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
-                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
-                </span>
+                <th class="header-with-actions">
+                    <div class="header-content">
+                        <input type="checkbox" class="bulk-select-checkbox" id="bulkSelectEsCert" onchange="selectReadyRows(this,'enready')"/>
+                        <label for="bulkSelectEsCert">EN Ready</label>
+                        <button class="bulk-action-btn">Apply</button>
+                        <span class="table-header-filter">
+                            <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                            <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                        </span>
+                    </div>
                 </th>
-                <th>ES Ready
-                    <span class="table-header-filter">
-                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
-                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
-                </span>
+                <th class="header-with-actions">
+                    <div class="header-content">
+                        <input type="checkbox" class="bulk-select-checkbox" id="bulkSelectEsCert" onchange="selectReadyRows(this,'esready')"/>
+                        <label for="bulkSelectEsCert">ES Ready</label>
+                        <button class="bulk-action-btn">Apply</button>
+                        <span class="table-header-filter">
+                            <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
+                            <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
+                        </span>
+                    </div>
                 </th>
                 <th>EN Conflict
                     <span class="table-header-filter">
@@ -97,12 +122,7 @@
                     <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
                     <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
                 </span>
-                <th>Comments
-                    <span class="table-header-filter">
-                    <span class="up-arrow" onclick="sortTable(0, this)">▲</span>
-                    <span class="down-arrow" onclick="sortTable(0, this)">▼</span>
-                </span>
-                </th>
+                
             </tr>
         </thead>
         <tbody id="assetTableBody">
@@ -111,7 +131,12 @@
                     <tr class="asset-row" data-path="${asset.path}" data-status="${asset.status}" data-lastModified="${asset.lastModified}" data-assetName="${asset.name}" data-lastapproved="${asset.lastApprovedDate}"
                     data-esApproved="${asset.esStatus}" data-enApproved="${asset.enStatus}" data-isready="${asset.readyStatus ? 'true' : 'false'}" data-en-ready="${asset.enReady ? 'true' : 'false'}" data-es-ready="${asset.esReady ? 'true' : 'false'}">
                        <!-- <td class="asset-name">${asset.name}</td> -->
-                        <td class="asset-path">${asset.path}</td>
+                        <td class="asset-path">
+                            <div class="asset-path-wrapper">
+                                <input type="checkbox" class="asset-checkbox-input" data-path="${asset.path}" />
+                                <span class="asset-path-text">${asset.path}</span>
+                            </div>
+                        </td>
                         <!--<td class="asset-last-modified">${asset.lastModified}</td> -->
                         <td class="asset-approve-reject-en">
                             <!-- <button class="approve-btn" onclick="updateStatus(this, 'en-certified')">✔</button> -->
@@ -149,7 +174,7 @@
                                 <img src="/content/dam/wknd/en/site/icons/conflict.png" alt="Conflict" class="status-icon" />
                             </button>
                         </td>
-                        <td class="asset-status">${asset.status}</td>
+                        
                     </tr>
                 </sly>
             </sly>
