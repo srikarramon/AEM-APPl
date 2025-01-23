@@ -1,3 +1,6 @@
+// Initialize the variable at the top of the file
+let lastCheckedHeaderCheckbox = null;
+
 document.addEventListener('DOMContentLoaded', () => {
     const rows = document.querySelectorAll('.asset-row');
 
@@ -392,11 +395,22 @@ function markReady(button, status) {
 
 
 function selectNonCertifiedENESRows(checkbox, certifyType) {
+    clearFilters();
     // Get whether the checkbox is checked
     const isChecked = checkbox.checked;
 
     // Find all rows in the table
     const rows = document.querySelectorAll('.asset-row');
+
+     // Get all header checkboxes
+    const headerCheckboxes = document.querySelectorAll('.bulk-select-checkbox');
+
+    // Uncheck all checkboxes except the current one
+    headerCheckboxes.forEach(headerCheckbox => {
+        if (headerCheckbox !== checkbox) {
+            headerCheckbox.checked = false;
+        }
+    });
 
     rows.forEach(row => {
         let certifyButton;
@@ -427,12 +441,23 @@ function selectNonCertifiedENESRows(checkbox, certifyType) {
     });
 }
 
+
 function selectReadyRows(checkbox, readyType) {
     // Get whether the checkbox is checked
     const isChecked = checkbox.checked;
 
     // Find all rows in the table
     const rows = document.querySelectorAll('.asset-row');
+
+     // Get all header checkboxes
+    const headerCheckboxes = document.querySelectorAll('.bulk-select-checkbox');
+
+    // Uncheck all checkboxes except the current one
+    headerCheckboxes.forEach(headerCheckbox => {
+        if (headerCheckbox !== checkbox) {
+            headerCheckbox.checked = false;
+        }
+    });
 
     rows.forEach(row => {
         let readyButton;
@@ -461,4 +486,25 @@ function selectReadyRows(checkbox, readyType) {
             }
         }
     });
+}
+
+function uncertify(button, status) {
+    // Get the current row containing the clicked button
+    const row = button.closest('tr');
+
+    if (row) {
+        // Find the "EN Ready" button in the same row
+        const enReadyButton = row.querySelector('.ready-btn-en');
+        
+        // Enable the "EN Ready" button
+        if (enReadyButton) {
+            enReadyButton.disabled = false;
+            enReadyButton.classList.remove('disabled');
+            console.log(`EN Ready button enabled for row with status: ${status}`);
+        } else {
+            console.error('EN Ready button not found in the row.');
+        }
+    } else {
+        console.error('Could not find the parent row for the clicked button.');
+    }
 }

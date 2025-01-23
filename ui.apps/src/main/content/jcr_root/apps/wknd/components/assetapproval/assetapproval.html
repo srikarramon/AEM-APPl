@@ -23,8 +23,8 @@
         Ready
     </span>
     <span class="legend-item">
-        <img src="/content/dam/wknd/en/site/icons/change.png" alt="Was Ready" class="legend-icon" />
-        Was Ready
+        <img src="/content/dam/wknd/en/site/icons/unready.png" alt="Un Ready" class="legend-icon" />
+        Un Ready
     </span>
     <span class="legend-item">
         <img src="/content/dam/wknd/en/site/icons/conflict.png" alt="Conflicted" class="legend-icon" />
@@ -143,6 +143,9 @@
                              <button class="approve-btn" onclick="updateStatus(this, 'en-certified')">
                                 <img src="/content/dam/wknd/en/site/icons/certified-icon.png" alt="Ready" class="status-icon" />
                             </button>
+                            <button class="uncertify-btn" onclick="uncertify(this, 'en-uncertify')">
+                                <img src="/content/dam/wknd/en/site/icons/uncertified.png" alt="Ready" class="status-icon" />
+                            </button>
                            <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
                         </td>
                        <!-- <td class="asset-modified-by">${asset.modifiedBy}</td> -->
@@ -150,16 +153,25 @@
                              <button class="approve-btn" onclick="updateStatus(this, 'es-certified')">
                                 <img src="/content/dam/wknd/en/site/icons/certified-icon.png" alt="Ready" class="status-icon" />
                             </button>
+                            <button class="uncertify-btn" onclick="uncertify(this, 'es-uncertify')">
+                                <img src="/content/dam/wknd/en/site/icons/uncertified.png" alt="Ready" class="status-icon" />
+                            </button>
                            <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
                         </td>
                         <td class="asset-ready-en">
                             <button class="ready-btn-en" onclick="markReady(this,'enReady')">✔</button>
                             <span style="display:none">Ready</span>
                             <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
+                            <button class="unready-btn" onclick="uncertify(this, 'en-unready')">
+                                <img src="/content/dam/wknd/en/site/icons/unready.png" alt="Ready" class="status-icon" />
+                            </button>
                         </td>
                          <td class="asset-ready-es">
                             <button class="ready-btn-es" onclick="markReady(this,'esReady')">✔</button>
                              <span style="display:none">Ready</span>
+                             <button class="unready-btn" onclick="unready(this, 'es-unready')">
+                                <img src="/content/dam/wknd/en/site/icons/unready.png" alt="Ready" class="status-icon" />
+                            </button>
                             <!-- <button class="reject-btn" onclick="updateStatus(this, 'rejected')">✘</button> -->
                         </td>
                        <td class="asset-conflict-es">

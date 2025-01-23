@@ -226,6 +226,7 @@ table thead th:hover {
     border: none;
     padding: 0;
     cursor: pointer;
+   
 }
 
 
@@ -277,6 +278,10 @@ table thead th:hover {
 
 .asset-ready-conflict .conflict-btn img {
     filter: hue-rotate(0deg); /* Optional styling for the "conflict" icon */
+    
+}
+.conflict-btn {
+display: contents;
 }
 
 .asset-ready-conflict button:disabled {
@@ -381,4 +386,24 @@ th {
     overflow: hidden;
     text-overflow: ellipsis; /* Truncates text with ellipsis if it overflows */
    
+}
+
+.uncertify-btn .status-icon {
+    filter: invert(0) grayscale(100%);
+    padding-left: 4px;
+}
+
+.asset-ready-en .status-icon, .asset-ready-es .status-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.ready-btn-en, .ready-btn-es {
+    height: 25px;
+    width: 31px;
+    margin-right: 6px;
+}
+.unready-btn {
+    margin-left: 7px;
 }
